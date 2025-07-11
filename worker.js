@@ -2917,6 +2917,41 @@ var yaml = require_js_yaml();
 var src_default = {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.pathname === '/favicon.svg' || url.pathname === '/favicon.ico') {
+      const svg = `
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="cyber-bg" cx="60" cy="60" r="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00ffe7"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </radialGradient>
+    <linearGradient id="cyber-line" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00ffe7"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#cyber-bg)" stroke="#0f172a" stroke-width="4"/>
+  <line x1="60" y1="20" x2="60" y2="100" stroke="url(#cyber-line)" stroke-width="3"/>
+  <line x1="28" y1="40" x2="92" y2="80" stroke="url(#cyber-line)" stroke-width="3"/>
+  <line x1="92" y1="40" x2="28" y2="80" stroke="url(#cyber-line)" stroke-width="3"/>
+  <circle cx="60" cy="60" r="14" fill="#0f172a" stroke="#00ffe7" stroke-width="4"/>
+  <circle cx="60" cy="20" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <circle cx="60" cy="100" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <circle cx="28" cy="40" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <circle cx="92" cy="40" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <circle cx="28" cy="80" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <circle cx="92" cy="80" r="6" fill="#fff" stroke="#00ffe7" stroke-width="2"/>
+  <polyline points="60,50 66,66 56,66 62,80" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+      `.trim();
+      return new Response(svg, {
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          'Cache-Control': 'public, max-age=86400'
+        }
+      });
+    }
+
     const host = url.origin;
     const frontendUrl = 'https://raw.githubusercontent.com/bulianglin/psub/main/frontend.html';
     const SUB_BUCKET = env.SUB_BUCKET;
