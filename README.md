@@ -6,7 +6,7 @@ https://subapi.vpnjacky.dpdns.org
 
 ### 变量绑定
 
-环境变量名：`BACKEND`
+环境变量名：`BACKEND`,值是后端地址
 
 KV或R2变量名：`SUB_BUCKET`
 
