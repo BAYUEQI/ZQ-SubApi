@@ -2965,7 +2965,22 @@ var src_default = {
       }
       const originalHtml = await response.text();
       const modifiedHtml = originalHtml.replace(/https:\/\/bulianglin2023\.dev/, host);
-      return new Response(modifiedHtml, {
+      
+      // 插入谷歌统计代码
+      const googleAnalyticsCode = `
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ59827WX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MQ59827WX8');
+</script>`;
+      
+      // 在</head>标签前插入谷歌统计代码
+      const htmlWithAnalytics = modifiedHtml.replace('</head>', googleAnalyticsCode + '\n</head>');
+      
+      return new Response(htmlWithAnalytics, {
         status: 200,
         headers: {
           'Content-Type': 'text/html',
